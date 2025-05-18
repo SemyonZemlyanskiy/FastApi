@@ -17,6 +17,9 @@ class DiabetInput(BaseModel):
     s4: float
     s5: float
     s6: float
+    s7: float
+    s8: float
+    s9: float
 
 app = FastAPI()
 
@@ -28,11 +31,12 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.get('/model_info')
+@app.post('/load_diabet')
 async def model_info(input_data: DiabetInput):
     input_array = np.array([[input_data.age, input_data.bmi, input_data.bp,
                              input_data.s1, input_data.s2, input_data.s3,
-                             input_data.s4, input_data.s5, input_data.s6]])
+                             input_data.s4, input_data.s5, input_data.s6,
+                             input_data.s7, input_data.s8, input_data.s9]])
     
     predict = model.predict(input_array)[0]
 
